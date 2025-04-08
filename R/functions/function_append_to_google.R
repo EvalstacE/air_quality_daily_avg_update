@@ -19,7 +19,7 @@ append_to_google <- function(sheet_id) {
     
 # Join and overwrite duplicates
     updated <- existing %>%
-      filter(!date %in% new_fetch$date) %>%
+      filter(!date_mst %in% new_fetch$date_mst) %>%
       bind_rows(new_fetch) %>%
       arrange(date_mst)
     

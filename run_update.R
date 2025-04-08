@@ -12,9 +12,11 @@ library(tidyr)
 
 source("R/functions/function_fetch_aq_data.R")
 source("R/functions/function_append_to_google.R")
+sheet_id = Sys.getenv("SHEET_ID")
+googlesheets4::gs4_auth()
 
 tryCatch({
-  append_to_google()
+  append_to_google(sheet_id)
   message("Weekly air quality update complete.")
 }, error = function(e) {
   message("❌ Update failed: ", e$message)

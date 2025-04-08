@@ -5,10 +5,11 @@
 
 source("R/functions/function_fetch_aq_data.R")
 
-append_to_google <- function() {
+
+append_to_google <- function(sheet_id) {
   
   new_fetch <- fetch_aq_data()
-  
+
   existing <- tryCatch(
     read_sheet(sheet_id, sheet = "daily_avg"),
     error = function(e) tibble()

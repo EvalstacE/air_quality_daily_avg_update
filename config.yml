@@ -1,0 +1,2 @@
+default:
+  mtdeq_api: "https://gis.mtdeq.us/hosting/rest/services/Hosted/Montana_Air_Quality_Monitoring_Data_REV24/FeatureServer/0/query"

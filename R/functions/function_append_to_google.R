@@ -23,7 +23,8 @@ append_to_google <- function(sheet_id) {
       mutate(
         year = as.numeric(year),
         date_mst = as.Date(date_mst),
-        daily_avg_aqs_value = as.numeric(daily_avg_aqs_value)
+        daily_avg_aqs_value = as.numeric(daily_avg_aqs_value),
+        above_35 = as.logical(above_35)
         
         )
     
@@ -31,7 +32,8 @@ append_to_google <- function(sheet_id) {
       mutate(
         year = as.numeric(year),
         date_mst = as.Date(date_mst),
-        daily_avg_aqs_value = as.numeric(daily_avg_aqs_value)
+        daily_avg_aqs_value = as.numeric(daily_avg_aqs_value),
+        above_35 = as.logical(above_35)
         )
     
     updated <- existing %>%

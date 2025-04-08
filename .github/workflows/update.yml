@@ -6,6 +6,7 @@ on:
   workflow_dispatch:
 
 env:
+  SHEET_ID: ${{ secrets.SHEET_ID }}
   R_LIBS_USER: ~/.local/R/library
 
 jobs:

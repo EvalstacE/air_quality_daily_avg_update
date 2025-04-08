@@ -1,0 +1,44 @@
+name: Weekly Daily Average Air Quality Update
+
+on:
+  schedule:
+    - cron: '0 6 * * 1'  # At 06:00 on Monday
+  workflow_dispatch:
+
+jobs:
+  update-air-quality:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Authenticate to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+
+      - name: Install system dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+          
+      - name: Cache R packages
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/R
+          key: ${{ runner.os }}-r-${{ hashFiles('**/run_update.R') }}
+          restore-keys: |
+            ${{ runner.os }}-r-    
+
+      - name: Install R packages
+        run: |
+          Rscript -e 'install.packages(c(
+            "config", "googlesheets4", "lubridate", 
+            "jsonlite",  "httr", "dplyr", "readr", "tidyr"
+          ), quiet = TRUE)'
+
+      - name: Run weekly update
+        run: Rscript run_update.R

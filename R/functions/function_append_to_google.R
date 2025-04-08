@@ -18,6 +18,22 @@ append_to_google <- function(sheet_id) {
   if (nrow(existing) > 0) {
     
 # Join and overwrite duplicates
+# Clean up types
+    existing <- existing %>%
+      mutate(
+        year = as.numeric(year),
+        date_mst = as.Date(date_mst),
+        daily_avg_aqs_value = as.numeric(daily_avg_aqs_value)
+        
+        )
+    
+    all_data <- all_data %>%
+      mutate(
+        year = as.numeric(year),
+        date_mst = as.Date(date_mst),
+        daily_avg_aqs_value = as.numeric(daily_avg_aqs_value)
+        )
+    
     updated <- existing %>%
       filter(!date_mst %in% new_fetch$date_mst) %>%
       bind_rows(new_fetch) %>%

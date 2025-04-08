@@ -27,7 +27,7 @@ append_to_google <- function(sheet_id) {
         
         )
     
-    all_data <- all_data %>%
+    new_fetch <- new_fetch %>%
       mutate(
         year = as.numeric(year),
         date_mst = as.Date(date_mst),

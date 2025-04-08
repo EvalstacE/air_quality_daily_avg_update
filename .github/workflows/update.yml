@@ -2,8 +2,11 @@ name: Weekly Daily Average Air Quality Update
 
 on:
   schedule:
-    - cron: '0 6 * * 1'  # At 06:00 on Monday
+    - cron: '0 6 * * 1'  # At 06:00 on Monday (UTC)
   workflow_dispatch:
+
+env:
+  R_LIBS_USER: ~/.local/R/library
 
 jobs:
   update-air-quality:
@@ -24,21 +27,25 @@ jobs:
         run: |
           sudo apt-get update
           sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
-          
-      - name: Cache R packages
+
+      - name: Cache R package library
         uses: actions/cache@v3
         with:
-          path: ~/.cache/R
-          key: ${{ runner.os }}-r-${{ hashFiles('**/run_update.R') }}
+          path: ${{ env.R_LIBS_USER }}
+          key: ${{ runner.os }}-r-${{ hashFiles('**/*.R') }}
           restore-keys: |
-            ${{ runner.os }}-r-    
+            ${{ runner.os }}-r-
 
       - name: Install R packages
         run: |
           Rscript -e 'install.packages(c(
             "config", "googlesheets4", "lubridate", 
-            "jsonlite",  "httr", "dplyr", "readr", "tidyr"
+            "jsonlite", "httr", "dplyr", "readr", "tidyr"
           ), quiet = TRUE)'
 
       - name: Run weekly update
         run: Rscript run_update.R
+
+      - name: Confirm success
+        run: echo "✅ Weekly Air Quality update completed successfully!"
+

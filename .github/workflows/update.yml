@@ -2,7 +2,7 @@ name: Weekly Daily Average Air Quality Update
 
 on:
   schedule:
-    - cron: '0 6 * * 1'  # At 06:00 on Monday (UTC)
+    - cron: '0 2 * * *' 
   workflow_dispatch:
 
 env:

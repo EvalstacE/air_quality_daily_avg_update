@@ -5,12 +5,12 @@ fetch_monthly_avgs <- function() {
   url = config::get("mtdeq_api")
   
   # Get first and last day of previous month
-  first_day_last_month <- lubridate::floor_date(Sys.Date(), unit = "month") - lubridate::months(1)
-  last_day_last_month  <- lubridate::ceiling_date(first_day_last_month, unit = "month") - lubridate::days(1)
+  first_day_last_month <- lubridate::floor_date(Sys.Date(), unit = "month", tz = "America/Denver") - lubridate::months(1)
+  last_day_last_month  <- lubridate::ceiling_date(first_day_last_month, unit = "month", tz = "America/Denver") - lubridate::days(1)
   
   # Convert to UNIX timestamp in milliseconds
-  start_time <- as.numeric(as.POSIXct(first_day_last_month, tz = "UTC")) * 1000
-  end_time   <- as.numeric(as.POSIXct(last_day_last_month + lubridate::days(1), tz = "UTC")) * 1000
+  start_time <- as.numeric(as.POSIXct(first_day_last_month, tz = "America/Denver")) * 1000
+  end_time   <- as.numeric(as.POSIXct(last_day_last_month + lubridate::days(1), tz = "America/Denver")) * 1000
   
   all_data <- data.frame()
   result_offset <- 0
@@ -53,8 +53,8 @@ fetch_monthly_avgs <- function() {
         mutate(
           datetime_mst = lubridate::with_tz(datetime, "America/Denver"),
           date_mst = as.Date(format(datetime, tz = "America/Denver")),
-          year = as.Date(format(date_mst, "%Y", tz = "America/Denver")),
-          month = as.Date(format(date_mst, "%m", tz = "America/Denver"))
+          year = as.integer(format(datetime, "%Y", tz = "America/Denver")),
+          month = as.integer(format(datetime, "%m", tz = "America/Denver"))
           
         ) %>%
         

@@ -46,7 +46,7 @@ append_monthly_google <- function(sheet_id) {
   } else {
     
     # First time write
-    sheet_write(existing, ss = sheet_id, sheet = "monthly_avgs")
+    sheet_write(new_fetch, ss = sheet_id, sheet = "monthly_avgs")
     message("✅ Wrote new daily_avg sheet.")
   }
   

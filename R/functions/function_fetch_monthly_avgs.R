@@ -78,6 +78,7 @@ fetch_monthly_avgs <- function() {
   
   # Calculate daily average and sort by date
   all_data <- all_data %>%
+    filter(!is.na(date_mst)) %>%
     group_by(year, month, sitename, parameter) %>%
     summarise(
       monthly_avg_aqs_value = mean(aqs_value, na.rm = TRUE),

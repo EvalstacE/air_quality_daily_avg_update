@@ -53,8 +53,8 @@ fetch_monthly_avgs <- function() {
         mutate(
           datetime_mst = lubridate::with_tz(datetime, "America/Denver"),
           date_mst = as.Date(format(datetime, tz = "America/Denver")),
-          year = as.integer(format(datetime, "%Y", tz = "America/Denver")),
-          month = as.integer(format(datetime, "%m", tz = "America/Denver"))
+          year = as.integer(format(date_mst, "%Y", tz = "America/Denver")),
+          month = as.integer(format(date_mst, "%m", tz = "America/Denver"))
           
         ) %>%
         

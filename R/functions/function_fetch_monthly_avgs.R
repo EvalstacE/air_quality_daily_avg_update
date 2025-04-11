@@ -59,6 +59,7 @@ fetch_monthly_avgs <- function() {
           
         ) %>%
         
+        filter(date_mst >= first_day_last_month & date_mst <= last_day_last_month) %>%
         select(year, month, datetime_mst, date_mst, sitename, parameter, aqs_value)
       
       # Append to the full dataset

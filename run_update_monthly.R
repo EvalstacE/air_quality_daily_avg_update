@@ -20,7 +20,7 @@ message("📋 Cleaned SHEET_ID: ", sheet_id)
 
 
 googlesheets4::gs4_auth()
-source("R/functions/function_feth_monthly_avgs.R")
+source("R/functions/function_fetch_monthly_avgs.R")
 source("R/functions/function_append_monthly_google.R")
 
 

@@ -6,7 +6,7 @@ fetch_monthly_avgs <- function() {
   
   # Get first and last day of previous month
   first_day_last_month <- lubridate::floor_date(Sys.Date(), unit = "month") - months(1)
-  last_day_last_month  <- lubridate::ceiling_date(first_day_last_month, unit = "month") - days(1)
+  last_day_last_month  <- lubridate::ceiling_date(first_day_last_month, unit = "month") - lubridate::days(1)
   
   # Convert to UNIX timestamp in milliseconds
   start_time <- as.numeric(as.POSIXct(first_day_last_month, tz = "UTC")) * 1000
@@ -54,7 +54,7 @@ fetch_monthly_avgs <- function() {
           datetime_mst = lubridate::with_tz(datetime, "America/Denver"),
           date_mst = as.Date(format(datetime, tz = "America/Denver")),
           year = as.integer(format(datetime, "%Y", tz = "America/Denver")),
-          month = lubridate::month(datetime_mst)
+          month = as.integer(format(datetime, "%b", tz = "America/Denver"))
           
         ) %>%
         

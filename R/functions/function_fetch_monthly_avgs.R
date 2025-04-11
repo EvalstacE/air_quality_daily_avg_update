@@ -5,7 +5,7 @@ fetch_monthly_avgs <- function() {
   url = config::get("mtdeq_api")
   
   # Get first and last day of previous month
-  first_day_last_month <- lubridate::floor_date(Sys.Date(), "month") - lubridate::period(1, "month")
+  first_day_last_month <- lubridate::floor_date(Sys.Date(), "month") - lubridate::period(3, "month")
   
   last_day_last_month  <- lubridate::ceiling_date(first_day_last_month, unit = "month") - lubridate::days(1)
   

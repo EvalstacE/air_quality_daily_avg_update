@@ -3,10 +3,9 @@ fetch_monthly_avgs <- function() {
   
   # --- API Setup ---
   url = config::get("mtdeq_api")
-  
+  options(scipen = 9999)
   # Get first and last day of previous month
   first_day_last_month <- lubridate::floor_date(Sys.Date(), "month") - lubridate::period(1, "month")
-  
   last_day_last_month  <- lubridate::ceiling_date(first_day_last_month, unit = "month") - lubridate::days(1)
   
   # Convert to UNIX timestamp in milliseconds
@@ -55,9 +54,7 @@ fetch_monthly_avgs <- function() {
           date_mst = as.Date(format(datetime, tz = "America/Denver")),
           year = as.integer(format(datetime, "%Y", tz = "America/Denver")),
           month = as.integer(format(datetime, "%m", tz = "America/Denver"))
-          
         ) %>%
-        
         filter(date_mst >= first_day_last_month & date_mst <= last_day_last_month) %>%
         select(year, month, datetime_mst, date_mst, sitename, parameter, aqs_value)
       

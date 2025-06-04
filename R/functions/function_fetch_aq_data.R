@@ -6,6 +6,7 @@ fetch_aq_data <- function() {
   
   # --- API Setup ---
   url = config::get("mtdeq_api")
+  options(scipen = 9999)
   end_time <- as.numeric(as.POSIXct(Sys.Date()+1, tz = "UTC")) * 1000
   start_time <- as.numeric(as.POSIXct(Sys.Date()-30, tz = "UTC")) * 1000
   

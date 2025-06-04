@@ -50,7 +50,6 @@ fetch_monthly_avgs <- function() {
       
       # Add derived date and hour columns
       df <- df %>%
-        filter(!is.na(date)) %>%
         mutate(
           datetime_mst = lubridate::with_tz(datetime, tz = "America/Denver"),
           date_mst = as.Date(format(datetime, tz = "America/Denver")),
@@ -79,7 +78,6 @@ fetch_monthly_avgs <- function() {
   
   # Calculate daily average and sort by date
   all_data <- all_data %>%
-    filter(!is.na(date_mst)) %>%
     group_by(year, month, sitename, parameter) %>%
     summarise(
       monthly_avg_aqs_value = mean(aqs_value, na.rm = TRUE),

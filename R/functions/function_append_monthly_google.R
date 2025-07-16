@@ -33,15 +33,18 @@ append_monthly_google <- function(sheet_id) {
         month = as.numeric(month),
         monthly_avg_aqs_value = as.numeric(monthly_avg_aqs_value)
       )
+# - only rows that exactly match year AND month from the new dataframe
+## -- are replaced — all other months from that year (or other years) 
+### --- will be preserved   
     
     updated <- existing %>%
-      filter(!month %in% new_fetch$month & !year %in% new_fetch$year) %>%
+      anti_join(new_fetch, by = c("year", "month")) %>%
       bind_rows(new_fetch) %>%
       arrange(desc(year), desc(month))
     
     range_clear(sheet_id, sheet = "monthly_avgs")
     sheet_write(updated, ss = sheet_id, sheet = "monthly_avgs")
-    message("✅ Updated donthly_avgs sheet with new + updated records.")
+    message("✅ Updated monthly_avgs sheet with new + updated records.")
     
   } else {
     
